@@ -1,7 +1,6 @@
 function [frec_Ffund] = FindPitch(in,fs)
 
 % Halla la fundamental del bloque de entrada
-% Debe ser un bloque de 2048 muestras
 
 MIN_FREC = 80;                          % Va a detectar a partir de esta frecuencia
 in_hann = in.*hann(length(in))';        % Aplico una ventana Hann
@@ -13,7 +12,7 @@ in_hann_corr = xcorr(in_hann);          % Y autocorrelaciono
 f=f_corr(Fm_x_corr);            % Frecuencia en la que se ubica el maximo absoluto
 
 
-d = floor(MIN_FREC/(fs/2048));  % Distancia minima entre harmonicos
+d = floor(MIN_FREC/(fs/length(in)));  % Distancia minima entre harmonicos
 M = floor(f/d);                 % El maximo absoluto va a ser menor a M*f0
 Ffund = zeros(length(M));
 for i=1:M
